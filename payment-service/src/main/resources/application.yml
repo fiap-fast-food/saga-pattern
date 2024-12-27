@@ -1,0 +1,48 @@
+server:
+  port: 8091
+
+spring:
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    topic:
+      orchestrator: orchestrator
+      payment-success: payment-success
+      payment-fail: payment-fail
+    consumer:
+      group-id: payment-group
+      auto-offset-reset: latest
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:payment-db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: OFF
+
+mercado:
+  pago:
+    public-key: ${PUBLIC_KEY:TEST-1c9f9af3-e3f7-4edc-bd9d-f896bc7b6b87}
+    access-token: ${ACCESS_TOKEN:TEST-8883690475272396-021516-af7ed20f5095c9ce2e12649a35f348ee-1076662323}
+
+api:
+  url: ${API_URL:localhost}:${API_PORT:8091}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    docExpansion: none
